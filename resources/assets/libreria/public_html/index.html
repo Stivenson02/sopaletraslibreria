@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            table.blueTable {
+                border: 1px solid #5592bb;
+                background-color: #EEEEEE;
+                width: 100%;
+                text-align: left;
+                border-collapse: collapse;
+            }
+            table.blueTable td, table.blueTable th {
+                border: 1px solid #AAAAAA;
+                padding: 3px 2px;
+            }
+            table.blueTable tbody td {
+                font-size: 13px;
+            }
+            table.blueTable tr:nth-child(even) {
+                background: #5592bb;
+            }
+            table.blueTable thead {
+                background: #5592bb;
+                background: -moz-linear-gradient(top, #5592bb 0%, #327cad 66%, #5592bb 100%);
+                background: -webkit-linear-gradient(top, #5592bb 0%, #327cad 66%, #5592bb 100%);
+                background: linear-gradient(to bottom, #5592bb 0%, #327cad 66%, #5592bb 100%);
+                border-bottom: 2px solid #444444;
+            }
+            table.blueTable thead th {
+                font-size: 15px;
+                font-weight: bold;
+                color: #FFFFFF;
+                border-left: 2px solid #5592bb;
+            }
+            table.blueTable thead th:first-child {
+                border-left: none;
+            }
+
+            table.blueTable tfoot {
+                font-size: 14px;
+                font-weight: bold;
+                color: #FFFFFF;
+                background: #5592bb;
+                background: -moz-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #5592bb 100%);
+                background: -webkit-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #5592bb 100%);
+                background: linear-gradient(to bottom, #dcebf7 0%, #d4e6f6 66%, #5592bb 100%);
+                border-top: 2px solid #444444;
+            }
+            table.blueTable tfoot td {
+                font-size: 14px;
+            }
+            table.blueTable tfoot .links {
+                text-align: right;
+            }
+            table.blueTable tfoot .links a{
+                display: inline-block;
+                background: #5592bb;
+                color: #FFFFFF;
+                padding: 2px 8px;
+                border-radius: 5px;
+            }
+        </style>
+
+    </head>
+    <body>
+        <form id="iniciar">
+            <input id="nombre" type="text"  placeholder="Nombre"><br>
+            <input id="dimencion" type="number" max="20" min="9" placeholder="Dimencion"><br>
+            <select id="tema">
+                <option value="0">Juego Rapido</option>
+                <option value="1">Animales</option>
+                <option value="2">Programacion</option>
+                <option value="3">Hogar</option>
+            </select>
+            <br><br>
+            <input type="submit" id="crear" onclick="ir()" value="JUGAR">
+        </form>
+        <section id="onejuego">
+            <table class="blueTable">
+                <thead id="play">
+                </thead>
+            </table>
+            <form id="solution">
+                <input  type="hidden" id="solucionando" onclick="juegosolucion()" value="SOLUCION">
+            </form>
+            <div id="arraypalaras" ></div>
+            <table class="blueTable">
+                <thead id="todaslasencontradas">
+                </thead>
+            </table>
+            <table class="blueTable">
+                <thead id="todaslaspalabras">
+                </thead>
+            </table>
+        </section>
+
+        <section id="twojuego">
+            <table class="blueTable">
+                <thead id="solutionplay">
+                </thead>
+            </table>
+            <div id="volver"></div>
+            <form id="solution">
+                <input  type="hidden" id="solucionando" onclick="juegosolucion()" value="SOLUCION">
+            </form>
+        </section>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+
+        </script>
+        <script src="sopa.js"></script>
+        <script src="carga.js"></script>
+        <script>
+                    (function (window, document) {
+                        _.getID('solution').noSubmit();
+
+                    }
+                    )(window, document);
+
+                    function juegosolucion() {
+                        (function (window, document) {
+                            $('#twojuego').show();
+                            $('#onejuego').hide();
+
+                            $("#volver").append("<a href='index.html'><input type='submit' value='Jugar Nuevo'></a>");
+
+                        }
+                        )(window, document);
+                    }
+
+                    var palbraensopa = _.palabraSopa();
+
+                    function myFunction(val, letra) {
+                        (function (window, document) {
+
+
+                            var word = _.validandoletra(letra, val);
+
+                            if (word == 1) {
+                                var styles = {
+                                    color: "#fff",
+                                    background: "#000"
+                                };
+                                $("#" + val).css(styles);
+                                for (var i = 0; i < palbraensopa.length; i++) {
+                                    var newpal = " ";
+
+                                    console.log($("#" + palbraensopa[i]).val());
+                                    for (var j = 0; j < palbraensopa[i].length; j++) {
+                                        if (palbraensopa[i].charAt(j) == letra) {
+
+                                            newpal = newpal + "-";
+                                            console.log("letra: " + letra + "palabra: " + palbraensopa[i]);
+                                        } else {
+                                            newpal = newpal + palbraensopa[i].charAt(j);
+                                        }
+
+                                    }
+                                    _.actualPalabras(palbraensopa[i], newpal);
+
+                                }
+                                var nuevovalues = _.encontrando();
+
+                                for (var i = 0; i < nuevovalues.length; i++) {
+                                    $("#" + palbraensopa[i]).val(nuevovalues[i]);
+                                }
+                            }
+                        }
+                        )(window, document);
+
+                    }
+        </script>
+    </body>
+
+</html>
